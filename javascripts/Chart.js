@@ -6,7 +6,7 @@
 // Credits to Greg Houston (http://demos.greghoustondesign.com/piechart/)
 //
 ////////////////////////////////////
-Chart = new Class({
+var Chart = new Class({
 	Implements : [Options], 
 	Binds : ["showToolTip", "hideToolTip"], 
 	
