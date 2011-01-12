@@ -108,6 +108,9 @@ var Chart = new Class({
 			slice[8] = Math.max(Math.round((slice[7] / (2 * Math.PI)) * mapVertices) - 2, 0); // Number of vertices to use from total for this slice
 			slice[9] = slice[7] / Math.max(slice[8], 1); // Vertices increment in radians
 			slice[10] = 0; // Used later for tracking
+			if (slice[4] === 0) {
+				continue;
+			}
 			
 			// Gradient for colored slice:
 			ctxGradient = ctx.createRadialGradient(pieCenter, pieCenter, 0, pieCenter, pieCenter, pieRadius);
