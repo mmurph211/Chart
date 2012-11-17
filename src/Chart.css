@@ -1,0 +1,29 @@
+/*
+ Chart
+ MIT-style license. Copyright 2012 Matt V. Murphy
+*/
+.chartMap {
+	display : none;
+}
+.chartImage {
+	position : absolute;
+	z-index : 2;
+	top : 0px;
+	left : 0px;
+	border : none;
+}
+.chartTooltip {
+	position : absolute;
+	z-index : 3;
+	top : -5000px;
+	left : -5000px;
+	padding : 6px 9px 6px 12px;
+	border-width : 1px;
+	border-style : solid;
+	border-color : #ddd #ccc #aaa #ccc;
+	border-radius : 6px;
+	min-width : 90px;
+	line-height : 1.5em;
+	background-color : #fff;
+	box-shadow : 1px 1px 1px rgba(255, 255, 255, 0.4);
+}

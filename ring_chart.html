@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<title>Canvas Ring Chart with Tooltips</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+		<link href="src/Chart.css" rel="stylesheet" type="text/css">
+		<style>
+			html,body{margin:0px;padding:0px;background-color:#fff;}
+			h1{display:block;margin:30px 20px 2px 40px;line-height:21px;font-size:21px;font-family:Verdana;color:#333;}
+			a{font-size:12px;font-family:Verdana;text-decoration:none;color:#0000ff;}
+			a:hover{text-decoration:underline;}
+			#demoDiv{margin:20px;padding:20px 10px;width:250px;height:250px;}
+			#demoChartDiv{position:relative;width:250px;height:250px;}
+			.demoLinks{margin:0px 40px;}
+			#demoTableDiv{position:absolute;top:101px;left:312px;padding:5px;cursor:default;}
+			h3{display:inline-block;*display:inline;zoom:1;margin:15px 0px 0px 42px;line-height:16px;font-size:16px;font-family:Verdana;vertical-align:top;}
+			#updateBtn{display:inline-block;*display:inline;zoom:1;margin:14px 0px 0px 5px;font-family:Verdana;font-size:9px;vertical-align:top;}
+			#demoTable{margin:8px 20px 20px 36px;border-collapse:collapse;border-spacing:0px;font-family:Verdana;font-size:12px;}
+			#demoTable th{padding:6px;text-align:left;border-width:1px 0px;border-style:solid;border-color:#ddd;background-color:#fafafa;}
+			#demoTable td{padding:6px;white-space:nowrap;}
+			.colorBox{position:absolute;display:inline-block;*display:inline;zoom:1;margin:2px 0px 0px -21px;width:9px;height:9px;border:1px solid #777;border-radius:2px;overflow:hidden;}
+			.main{border-width:1px 0px;border-style:solid;border-color:#e4e4e4;background-color:#fafafa;}
+			.divider{padding:3px 0px !important;}
+			.num{padding-left:40px !important;text-align:right !important;}
+			.chartTooltip{font-family:Verdana;font-size:11px;} /* Example customization */
+		</style>
+	</head>
+	<body>
+		<h1>Canvas Ring Chart with Tooltips</h1>
+		<div class="demoLinks">
+			<a href="http://www.matts411.com/post/canvas-pie-and-ring-charts-with-tooltips/" title="Home">Home</a>
+			 - 
+			<a href="http://github.com/mmurph211/Chart" title="GitHub">GitHub project</a>
+			 - 
+			<a href="https://github.com/mmurph211/Chart/blob/master/src/Chart.js" title="View Script">Script Source</a>
+			 - 
+			<a href="https://github.com/mmurph211/Chart/blob/master/src/Chart.css" title="View CSS">CSS Source</a>
+		</div>
+		
+		<div id="demoDiv">
+			<div id="demoChartDiv"></div>
+		</div>
+		<div id="demoTableDiv">
+			<h3>Example Investor Portfolio:</h3>
+			<input id="updateBtn" type="button" value="Update">
+			<table id="demoTable" cellpadding="0">
+				<thead>
+					<tr>
+						<th>Asset Cat.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+						<th>Asset Class</th>
+						<th class="num">Percent</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="main"><span class="colorBox" style="background-color:#76df72;"></span> Fixed Income</td>
+						<td class="main">&nbsp;</td>
+						<td id="pctMain-0" class="main num">30.00</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>Taxable Bonds</td>
+						<td id="pct-0" class="num">10.00</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>High Yield Bonds</td>
+						<td id="pct-1" class="num">10.00</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>Int'l Debt</td>
+						<td id="pct-2" class="num">10.00</td>
+					</tr>
+					<tr>
+						<td class="divider"></td>
+					</tr>
+					<tr>
+						<td class="main"><span class="colorBox" style="background-color:#759ddf;"></span> Equity</td>
+						<td class="main">&nbsp;</td>
+						<td id="pctMain-1" class="main num">40.00</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>Large Cap Equity</td>
+						<td id="pct-3" class="num">15.00</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>Mid Cap Equity</td>
+						<td id="pct-4" class="num">10.00</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>Small Cap Equity</td>
+						<td id="pct-5" class="num">5.00</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>Int'l Equity</td>
+						<td id="pct-6" class="num">10.00</td>
+					</tr>
+					<tr>
+						<td class="divider"></td>
+					</tr>
+					<tr>
+						<td class="main"><span class="colorBox" style="background-color:#f1d94b;"></span> Real Estate</td>
+						<td class="main">&nbsp;</td>
+						<td id="pctMain-2" class="main num">15.00</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>Global Public REITs</td>
+						<td id="pct-7" class="num">5.00</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>Private Real Estate</td>
+						<td id="pct-8" class="num">10.00</td>
+					</tr>
+					<tr>
+						<td class="divider"></td>
+					</tr>
+					<tr>
+						<td class="main"><span class="colorBox" style="background-color:#f1994a;"></span> Alternatives</td>
+						<td class="main">&nbsp;</td>
+						<td id="pctMain-3" class="main num">10.00</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>Diversified Hedge</td>
+						<td id="pct-9" class="num">5.00</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>Private Equity</td>
+						<td id="pct-10" class="num">5.00</td>
+					</tr>
+					<tr>
+						<td class="divider"></td>
+					</tr>
+					<tr>
+						<td class="main"><span class="colorBox" style="background-color:#f15f5f;"></span> Cash</td>
+						<td class="main">&nbsp;</td>
+						<td id="pctMain-4" class="main num">5.00</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>Cash</td>
+						<td id="pct-11" class="num">5.00</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<!--[if lte IE 8]><script src="src/excanvas.js"></script><![endif]-->
+		<script src="src/Chart.js"></script>
+		<script>
+			window.onload = function() {
+				var chartData = [["Fixed Income", [
+				                     ["Taxable Bonds", 10.00, ""], 
+				                     ["High Yield Bonds", 10.00, ""], 
+				                     ["Int'l Debt", 10.00, ""]], "", "#76df72"], 
+				                 ["Equity", [
+				                     ["Large Cap Equity", 15.00, ""], 
+				                     ["Mid Cap Equity", 10.00, ""], 
+				                     ["Small Cap Equity", 5.00, ""], 
+				                     ["Int'l Equity", 10.00, ""]], "", "#759ddf"], 
+				                 ["Real Estate", [
+				                     ["Global Public REITs", 5.00, ""], 
+				                     ["Private Real Estate", 10.00, ""]], "", "#f1d94b"], 
+				                 ["Alternatives", [
+				                     ["Diversified Hedge", 5.00, ""], 
+				                     ["Private Equity", 5.00, ""]], "", "#f1994a"], 
+				                 ["Cash", [
+				                     ["Cash", 5.00, ""]], "", "#f15f5f"]], 
+				    updateData = [["Fixed Income", [
+				                     ["Taxable Bonds", 5.00, ""], 
+				                     ["High Yield Bonds", 10.00, ""], 
+				                     ["Int'l Debt", 5.00, ""]], "", "#76df72"], 
+				                 ["Equity", [
+				                     ["Large Cap Equity", 15.00, ""], 
+				                     ["Mid Cap Equity", 15.00, ""], 
+				                     ["Small Cap Equity", 5.00, ""], 
+				                     ["Int'l Equity", 10.00, ""]], "", "#759ddf"], 
+				                 ["Real Estate", [
+				                     ["Global Public REITs", 5.00, ""], 
+				                     ["Private Real Estate", 12.00, ""]], "", "#f1d94b"], 
+				                 ["Alternatives", [
+				                     ["Diversified Hedge", 5.00, ""], 
+				                     ["Private Equity", 8.00, ""]], "", "#f1994a"], 
+				                 ["Cash", [
+				                     ["Cash", 5.00, ""]], "", "#f15f5f"]];
+				
+				// Create the ring chart:
+				var ringChart = new Chart.Ring("demoChartDiv", {
+				    	showTooltips : true, 
+				    	chartMinSize : [250, 250], 
+				    	chartMaxSize : [250, 250], 
+				    	chartData : chartData
+				    });
+				
+				// Add button event to update the ring chart data set:
+				document.getElementById("updateBtn").onclick = function(event) {
+					var event = event || window.event, 
+					    target = event.target || event.srcElement, 
+					    isUpdate = (target.value === "Update"), 
+					    dataSet = (isUpdate) ? updateData : chartData, 
+					    nextAction = (isUpdate) ? "Revert" : "Update", 
+					    doc = document, 
+					    sIdx = 0, 
+					    sPct;
+					
+					for (var i=0, slice; slice=dataSet[i]; i++) {
+						sPct = 0;
+						for (var j=0, subSlice; subSlice=slice[1][j]; j++) {
+							doc.getElementById("pct-" + (sIdx++)).innerHTML = subSlice[1].toFixed(2);
+							sPct += (subSlice[1] || 0);
+						}
+						doc.getElementById("pctMain-" + i).innerHTML = sPct.toFixed(2);
+					}
+					
+					target.value = nextAction;
+					ringChart.updateData(dataSet);
+				};
+			};
+		</script>
+	</body>
+</html>
