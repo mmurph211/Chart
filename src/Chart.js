@@ -2,7 +2,6 @@
 //
 // Chart
 // MIT-style license. Copyright 2012 Matt V. Murphy
-// Credits to Greg Houston (http://demos.greghoustondesign.com/piechart/)
 //
 ////////////////////////////////////
 (function(window, document, undefined) {
@@ -21,12 +20,14 @@
 			this.toolTipThrottle = -1;
 			this.options = {
 				showTooltips : true, 
-				selectorPrefix : "chart", // Prefixed to every id, name, class attribute for DOM element reference
-				selectorSuffix : "", // Suffixed to every id and name attribute for DOM element reference (note NOT class)
-				chartData : [], // An array of arrays. Inner array format depends on the chart type
-				chartMinSize : [-Infinity, -Infinity], // [width, height] in pixels (-Infinity for no minimum)
-				chartMaxSize : [Infinity, Infinity], // [width, height] in pixels (Infinity for no maximum)
-				clearImgPath : "src/clear.gif"
+				selectorPrefix : "chart", 
+				selectorSuffix : "", 
+				chartData : [], 
+				chartMinSize : [-Infinity, -Infinity], 
+				chartMaxSize : [Infinity, Infinity], 
+				clearImgPath : "src/clear.gif", 
+				onRegionEnter : this.nothing, 
+				onRegionExit : this.nothing
 			};
 			
 			if (options) {
@@ -37,9 +38,12 @@
 				}
 			}
 			this.options.selectorSuffix = this.options.selectorSuffix || ("" + Math.ceil(Math.random() * 50000));
-			this.options.showTooltips = (this.options.showTooltips && !("ontouchstart" in window));
+			this.options.showTooltips = (this.options.showTooltips && window.ontouchstart === undefined);
 		}
 	};
+	
+	//////////////////////////////////////////////////////////////////////////////////
+	Chart.prototype.nothing = function(){};
 	
 	//////////////////////////////////////////////////////////////////////////////////
 	Chart.prototype.getCanvas = function(chartSize) {
@@ -159,6 +163,7 @@
 		    showToolTipBound = bind(this.showToolTip, this), 
 		    hideToolTipBound = bind(this.hideToolTip, this);
 		
+		// Credits to Greg Houston (http://greghoustondesign.com) for MAP solution
 		var eMap = document.createElement("MAP");
 		eMap.id = prefix + "Map" + suffix;
 		eMap.name = prefix + "Map" + suffix;
@@ -191,32 +196,32 @@
 	
 	//////////////////////////////////////////////////////////////////////////////////
 	Chart.prototype.showToolTip = function(event) {
-		this.toolTipThrottle++;
-		if (this.toolTipThrottle & 1) {
-			return;
-		}
+		var event, index, page, top, left;
 		
-		var event = event || window.event, 
-		    target = event.target || event.srcElement, 
-		    index = target.getAttribute("index"), 
-		    page = getEventPagePositions(event), 
-		    left = page.x + 15, 
-		    top = page.y + 15;
-		
-		if (this.lastIndex !== index) {
-			this.lastIndex = index;
-			this.toolTip.innerHTML = this.toolTips[index] || "";
-		}
-		if (this.lastTop !== top || this.lastLeft !== left) {
-			this.lastTop = top;
-			this.lastLeft = left;
-			this.toolTip.style.cssText = "top:" + top + "px;left:" + left + "px;";
+		if ((this.toolTipThrottle++) & 1) {
+			event = event || window.event;
+			index = (event.target || event.srcElement).getAttribute("index");
+			page = getEventPagePositions(event);
+			left = page.x + 15;
+			top = page.y + 15;
+			
+			if (this.lastIndex !== index) {
+				this.lastIndex = index;
+				this.toolTip.innerHTML = this.toolTips[index] || "";
+				this.options.onRegionEnter(this.getRegionLabelByTooltipIndex(index));
+			}
+			if (this.lastTop !== top || this.lastLeft !== left) {
+				this.lastTop = top;
+				this.lastLeft = left;
+				this.toolTip.style.cssText = "top:" + top + "px;left:" + left + "px;";
+			}
 		}
 	};
 	
 	//////////////////////////////////////////////////////////////////////////////////
 	Chart.prototype.hideToolTip = function(event) {
 		this.toolTipThrottle = -1;
+		this.options.onRegionExit(this.getRegionLabelByTooltipIndex(this.lastIndex));
 		this.lastIndex = undefined;
 		if (!!this.toolTip) {
 			this.toolTip.innerHTML = "";
@@ -225,15 +230,12 @@
 	};
 	
 	//////////////////////////////////////////////////////////////////////////////////
-	Chart.prototype.cleanUp = function(clearDOM) {
-		this.animateTimer = (this.animateTimer) ? window.clearTimeout(this.animateTimer) : null;
-		if (!!this.toolTip) {
-			this.toolTip.parentNode.removeChild(this.toolTip);
-			this.toolTip = null;
-		}
-		if (clearDOM) {
+	Chart.prototype.cleanUp = function(isFromAnimate) {
+		if (isFromAnimate !== true) {
+			this.animateTimer = (this.animateTimer) ? window.clearTimeout(this.animateTimer) : null;
 			this.element.innerHTML = "";
 		}
+		try { this.toolTip.parentNode.removeChild(this.toolTip); } catch (e) {}
 		return null;
 	};
 	
@@ -382,6 +384,14 @@
 	};
 	
 	//////////////////////////////////////////////////////////////////////////////////
+	Chart.Pie.prototype.getRegionLabelByTooltipIndex = function(tooltipIdx) {
+		var tooltipIdx = parseInt("" + tooltipIdx, 10), 
+		    slice = (!isNaN(tooltipIdx)) ? this.options.chartData[tooltipIdx] || [] : [];
+		
+		return [(slice.length) ? slice[0] || "" : ""];
+	};
+	
+	//////////////////////////////////////////////////////////////////////////////////
 	Chart.Pie.prototype.updateData = function(newData) {
 		var slices = this.options.chartData, 
 		    animate = (!usingExCanvas), 
@@ -411,6 +421,7 @@
 			this.animate(1, animateData);
 		} else {
 			this.options.chartData = newData;
+			this.cleanUp(true);
 			Chart.Pie.apply(this, [this.element, this.options]);
 		}
 	};
@@ -441,6 +452,7 @@
 				chartData[i] = item["newSlice"];
 			}
 			this.options.chartData = chartData;
+			this.cleanUp(true);
 			Chart.Pie.apply(this, [this.element, this.options]);
 		}
 	};
@@ -692,6 +704,21 @@
 	};
 	
 	//////////////////////////////////////////////////////////////////////////////////
+	Chart.Ring.prototype.getRegionLabelByTooltipIndex = function(tooltipIdx) {
+		var indexes = tooltipIdx.split("-"), 
+		    idx, slice, subSlice;
+		
+		if (!isNaN((idx = parseInt("" + indexes[0], 10))) && (slice = this.options.chartData[idx]) && slice.length) {
+			if (!isNaN((idx = parseInt("" + indexes[1], 10))) && (subSlice = slice[1][idx]) && subSlice.length) {
+				return [subSlice[0] || "", slice[0] || ""];
+			} else {
+				return [slice[0] || ""];
+			}
+		}
+		return ["", ""];
+	};
+	
+	//////////////////////////////////////////////////////////////////////////////////
 	Chart.Ring.prototype.updateData = function(newData) {
 		var slices = this.options.chartData, 
 		    animate = (!usingExCanvas), 
@@ -733,6 +760,7 @@
 			this.animate(1, animateData);
 		} else {
 			this.options.chartData = newData;
+			this.cleanUp(true);
 			Chart.Ring.apply(this, [this.element, this.options]);
 		}
 	};
@@ -768,6 +796,7 @@
 				chartData[i] = item["newSlice"];
 			}
 			this.options.chartData = chartData;
+			this.cleanUp(true);
 			Chart.Ring.apply(this, [this.element, this.options]);
 		}
 	};
@@ -778,12 +807,15 @@
 	//
 	//////////////////////////////////////////////////////////////////////////////////
 	var getIEVersion = function() {
-		var eDiv = document.createElement("DIV"), 
-		    els = eDiv.getElementsByTagName("I"), 
-		    v = 3;
+		var nav = navigator, 
+		    version;
 		
-		while ((eDiv.innerHTML = "<!--[if gt IE " + (++v) + "]><i></i><![endif]-->") && (els[0]));
-		return (v > 4) ? v : undefined;
+		if (nav.appName === "Microsoft Internet Explorer") {
+			if (new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})").exec(nav.userAgent)) {
+				version = parseFloat(RegExp.$1);
+			}
+		}
+		return (version > 5) ? version : undefined;
 	};
 	
 	//////////////////////////////////////////////////////////////////////////////////
