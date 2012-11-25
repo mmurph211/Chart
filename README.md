@@ -24,7 +24,7 @@ Minify and add `src/Chart.js` and `src/Chart.css` to your website's resources
 directory. You can change some of the styling in Chart.css to suit your needs.
 
 If you plan on supporting Internet Explorer 8 or older, you'll need to also 
-minify and add `src/excanvas.js` as well as the image file `src\clear.gif`.
+minify and add `src/excanvas.js` as well as the image file `src/clear.gif`.
 
 Usage
 -----
