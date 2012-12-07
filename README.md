@@ -29,8 +29,8 @@ minify and add `src/excanvas.js` as well as the image file `src/clear.gif`.
 Usage
 -----
 
-Create a `DIV` element with an `ID`, relative positioning and a fixed width and
-height:
+Create a `div` element with an `id` attribute, relative positioning and a fixed 
+width and height:
 
     <div id="myChart" style="position:relative;width:250px;height:250px;"></div>
 
