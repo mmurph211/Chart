@@ -208,7 +208,7 @@
 			if (this.lastIndex !== index) {
 				this.lastIndex = index;
 				this.toolTip.innerHTML = this.toolTips[index] || "";
-				this.options.onRegionEnter(this.getRegionLabelByTooltipIndex(index));
+				this.options.onRegionEnter.apply(this, this.getRegionLabelByTooltipIndex(index));
 			}
 			if (this.lastTop !== top || this.lastLeft !== left) {
 				this.lastTop = top;
@@ -221,7 +221,7 @@
 	//////////////////////////////////////////////////////////////////////////////////
 	Chart.prototype.hideToolTip = function(event) {
 		this.toolTipThrottle = -1;
-		this.options.onRegionExit(this.getRegionLabelByTooltipIndex(this.lastIndex));
+		this.options.onRegionExit.apply(this, this.getRegionLabelByTooltipIndex(this.lastIndex));
 		this.lastIndex = undefined;
 		if (!!this.toolTip) {
 			this.toolTip.innerHTML = "";
