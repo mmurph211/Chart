@@ -8,37 +8,14 @@
 	"use strict";
 	
 	var Chart = function(element, options) {
-		if (typeof element === "string") {
-			element = document.getElementById(element);
-		}
-		if ((this.element = element)) {
+		if ((this.element = (typeof(element) === "string") ? $(element) : element)) {
 			this.element.innerHTML = "";
 			this.animateTimer = null;
 			this.cache = {};
 			this.toolTip = null;
 			this.toolTips = {};
 			this.toolTipThrottle = -1;
-			this.options = {
-				showTooltips : true, 
-				selectorPrefix : "chart", 
-				selectorSuffix : "", 
-				chartData : [], 
-				chartMinSize : [-Infinity, -Infinity], 
-				chartMaxSize : [Infinity, Infinity], 
-				clearImgPath : "src/clear.gif", 
-				onRegionEnter : this.nothing, 
-				onRegionExit : this.nothing
-			};
-			
-			if (options) {
-				for (var option in this.options) {
-					if (options[option] !== undefined) {
-						this.options[option] = options[option];
-					}
-				}
-			}
-			this.options.selectorSuffix = this.options.selectorSuffix || ("" + Math.ceil(Math.random() * 50000));
-			this.options.showTooltips = (this.options.showTooltips && window.ontouchstart === undefined);
+			this.setOptions(options);
 		}
 	};
 	
@@ -46,9 +23,37 @@
 	Chart.prototype.nothing = function(){};
 	
 	//////////////////////////////////////////////////////////////////////////////////
+	Chart.prototype.setOptions = function(options) {
+		var hasOwnProp = Object.prototype.hasOwnProperty, 
+		    option;
+		
+		this.options = {
+			showTooltips : true, 
+			selectorPrefix : "chart", 
+			selectorSuffix : "", 
+			chartData : [], 
+			chartMinSize : [-Infinity, -Infinity], 
+			chartMaxSize : [Infinity, Infinity], 
+			clearImgPath : "src/clear.gif", 
+			onRegionEnter : this.nothing, 
+			onRegionExit : this.nothing
+		};
+		
+		if (options) {
+			for (option in this.options) {
+				if (hasOwnProp.call(this.options, option) && options[option] !== undefined) {
+					this.options[option] = options[option];
+				}
+			}
+		}
+		this.options.selectorSuffix = this.options.selectorSuffix || ("" + Math.ceil(Math.random() * 50000));
+		this.options.showTooltips = (this.options.showTooltips && window.ontouchstart === undefined);
+	};
+	
+	//////////////////////////////////////////////////////////////////////////////////
 	Chart.prototype.getCanvas = function(chartSize) {
 		var chartId = this.options.selectorPrefix + "Chart" + this.options.selectorSuffix, 
-		    chart = document.getElementById(chartId);
+		    chart = $(chartId);
 		
 		if (!chart) {
 			chart = document.createElement("canvas");
@@ -934,7 +939,8 @@
 	};
 	
 	//////////////////////////////////////////////////////////////////////////////////
-	var animateInt = 1000 / 60, 
+	var $ = function(elemId) { return document.getElementById(elemId); }, 
+	    animateInt = 1000 / 60, 
 	    animateLoops = 10, 
 	    ieVersion = getIEVersion(), 
 	    clearImg = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQI12P4zwAAAgEBAKrChTYAAAAASUVORK5CYII=", 
