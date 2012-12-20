@@ -35,6 +35,7 @@
 			#demoTable td{padding:6px;white-space:nowrap;}
 			.main{border-width:1px 0px;border-style:solid;border-color:#e4e4e4;background-color:#fafafa;}
 			.divider{padding:3px 0px !important;line-height:0px;font-size:0px !important;}
+			.rOInput{margin:0px;padding:0px;border:none;text-align:right;font-size:12px;font-family:"Droid Sans",sans-serif;width:50px;vertical-align:middle;background-color:transparent;}
 			.num{padding-left:30px !important;text-align:right !important;}
 			.padLeft{padding-left:30px !important;}
 			.padLeftSmall{padding-left:20px !important;}
@@ -70,7 +71,7 @@
 				<div id="demoDiv"><div id="demoChartDiv"></div></div><br>
 				
 				<div id="demoTableDiv">
-					<input id="updateBtn" type="button" value="Update">
+					<input id="updateBtn" type="button" value="Update" data-next="update">
 					<table id="demoTable" cellpadding="0">
 						<thead>
 							<tr>
@@ -87,7 +88,7 @@
 							<tr>
 								<td class="main"><span class="colorBox clrBoxAlt" style="background-color:#76df72;"></span> Fixed Income</td>
 								<td class="main">&nbsp;</td>
-								<td id="pctMain-0" class="main num">30.00</td>
+								<td class="main num"><input id="pctMain-0" class="rOInput" type="text" value="30.00" tabIndex="-1" readOnly></td>
 								<td class="main num">20.00</td>
 								<td class="main num">40.00</td>
 								<td class="main padLeft">&nbsp;</td>
@@ -96,7 +97,7 @@
 							<tr>
 								<td>&nbsp;</td>
 								<td>Taxable Bonds</td>
-								<td id="pct-0" class="num">10.00</td>
+								<td class="num"><input id="pct-0" class="rOInput" type="text" value="10.00" tabIndex="-1" readOnly></td>
 								<td class="num">5.00</td>
 								<td class="num">15.00</td>
 								<td class="padLeft">ATC Investors</td>
@@ -105,7 +106,7 @@
 							<tr>
 								<td>&nbsp;</td>
 								<td>High Yield Bonds</td>
-								<td id="pct-1" class="num">10.00</td>
+								<td class="num"><input id="pct-1" class="rOInput" type="text" value="10.00" tabIndex="-1" readOnly></td>
 								<td class="num">5.00</td>
 								<td class="num">15.00</td>
 								<td class="padLeft">ATC Investors</td>
@@ -114,7 +115,7 @@
 							<tr>
 								<td>&nbsp;</td>
 								<td>Int'l Debt</td>
-								<td id="pct-2" class="num">10.00</td>
+								<td class="num"><input id="pct-2" class="rOInput" type="text" value="10.00" tabIndex="-1" readOnly></td>
 								<td class="num">5.00</td>
 								<td class="num">15.00</td>
 								<td class="padLeft">ATC Investors</td>
@@ -126,7 +127,7 @@
 							<tr>
 								<td class="main"><span class="colorBox clrBoxAlt" style="background-color:#759ddf;"></span> Equity</td>
 								<td class="main">&nbsp;</td>
-								<td id="pctMain-1" class="main num">40.00</td>
+								<td class="main num"><input id="pctMain-1" class="rOInput" type="text" value="40.00" tabIndex="-1" readOnly></td>
 								<td class="main num">30.00</td>
 								<td class="main num">50.00</td>
 								<td class="main padLeft">&nbsp;</td>
@@ -135,7 +136,7 @@
 							<tr>
 								<td>&nbsp;</td>
 								<td>Large Cap Equity</td>
-								<td id="pct-3" class="num">15.00</td>
+								<td class="num"><input id="pct-3" class="rOInput" type="text" value="15.00" tabIndex="-1" readOnly></td>
 								<td class="num">10.00</td>
 								<td class="num">20.00</td>
 								<td class="padLeft">DTG Capital</td>
@@ -144,7 +145,7 @@
 							<tr>
 								<td>&nbsp;</td>
 								<td>Mid Cap Equity</td>
-								<td id="pct-4" class="num">10.00</td>
+								<td class="num"><input id="pct-4" class="rOInput" type="text" value="10.00" tabIndex="-1" readOnly></td>
 								<td class="num">5.00</td>
 								<td class="num">15.00</td>
 								<td class="padLeft">DTG Capital</td>
@@ -153,7 +154,7 @@
 							<tr>
 								<td>&nbsp;</td>
 								<td>Small Cap Equity</td>
-								<td id="pct-5" class="num">5.00</td>
+								<td class="num"><input id="pct-5" class="rOInput" type="text" value="5.00" tabIndex="-1" readOnly></td>
 								<td class="num">5.00</td>
 								<td class="num">10.00</td>
 								<td class="padLeft">DTG Capital</td>
@@ -162,7 +163,7 @@
 							<tr>
 								<td>&nbsp;</td>
 								<td>Int'l Equity</td>
-								<td id="pct-6" class="num">10.00</td>
+								<td class="num"><input id="pct-6" class="rOInput" type="text" value="10.00" tabIndex="-1" readOnly></td>
 								<td class="num">5.00</td>
 								<td class="num">15.00</td>
 								<td class="padLeft">DTG Capital</td>
@@ -174,7 +175,7 @@
 							<tr>
 								<td class="main"><span class="colorBox clrBoxAlt" style="background-color:#f1d94b;"></span> Real Estate</td>
 								<td class="main">&nbsp;</td>
-								<td id="pctMain-2" class="main num">15.00</td>
+								<td class="main num"><input id="pctMain-2" class="rOInput" type="text" value="15.00" tabIndex="-1" readOnly></td>
 								<td class="main num">10.00</td>
 								<td class="main num">20.00</td>
 								<td class="main padLeft">&nbsp;</td>
@@ -183,7 +184,7 @@
 							<tr>
 								<td>&nbsp;</td>
 								<td>Global Public REITs</td>
-								<td id="pct-7" class="num">5.00</td>
+								<td class="num"><input id="pct-7" class="rOInput" type="text" value="5.00" tabIndex="-1" readOnly></td>
 								<td class="num">5.00</td>
 								<td class="num">10.00</td>
 								<td class="padLeft">DTG Capital</td>
@@ -192,7 +193,7 @@
 							<tr>
 								<td>&nbsp;</td>
 								<td>Private Real Estate</td>
-								<td id="pct-8" class="num">10.00</td>
+								<td class="num"><input id="pct-8" class="rOInput" type="text" value="10.00" tabIndex="-1" readOnly></td>
 								<td class="num">5.00</td>
 								<td class="num">15.00</td>
 								<td class="padLeft">&nbsp;</td>
@@ -204,7 +205,7 @@
 							<tr>
 								<td class="main"><span class="colorBox clrBoxAlt" style="background-color:#f1994a;"></span> Alternatives</td>
 								<td class="main">&nbsp;</td>
-								<td id="pctMain-3" class="main num">10.00</td>
+								<td class="main num"><input id="pctMain-3" class="rOInput" type="text" value="10.00" tabIndex="-1" readOnly></td>
 								<td class="main num">5.00</td>
 								<td class="main num">15.00</td>
 								<td class="main padLeft">&nbsp;</td>
@@ -213,7 +214,7 @@
 							<tr>
 								<td>&nbsp;</td>
 								<td>Diversified Hedge</td>
-								<td id="pct-9" class="num">5.00</td>
+								<td class="num"><input id="pct-9" class="rOInput" type="text" value="5.00" tabIndex="-1" readOnly></td>
 								<td class="num">2.50</td>
 								<td class="num">10.00</td>
 								<td class="padLeft">QQ Partners LLC</td>
@@ -222,7 +223,7 @@
 							<tr>
 								<td>&nbsp;</td>
 								<td>Private Equity</td>
-								<td id="pct-10" class="num">5.00</td>
+								<td class="num"><input id="pct-10" class="rOInput" type="text" value="5.00" tabIndex="-1" readOnly></td>
 								<td class="num">2.50</td>
 								<td class="num">10.00</td>
 								<td class="padLeft">&nbsp;</td>
@@ -234,7 +235,7 @@
 							<tr>
 								<td class="main"><span class="colorBox clrBoxAlt" style="background-color:#f15f5f;"></span> Cash</td>
 								<td class="main">&nbsp;</td>
-								<td id="pctMain-4" class="main num">5.00</td>
+								<td class="main num"><input id="pctMain-4" class="rOInput" type="text" value="5.00" tabIndex="-1" readOnly></td>
 								<td class="main num">2.50</td>
 								<td class="main num">10.00</td>
 								<td class="main padLeft">&nbsp;</td>
@@ -243,7 +244,7 @@
 							<tr>
 								<td>&nbsp;</td>
 								<td>Cash</td>
-								<td id="pct-11" class="num">5.00</td>
+								<td class="num"><input id="pct-11" class="rOInput" type="text" value="5.00" tabIndex="-1" readOnly></td>
 								<td class="num">2.50</td>
 								<td class="num">10.00</td>
 								<td class="padLeft">DTG Capital</td>
@@ -255,7 +256,7 @@
 			</div>
 		</div>
 		
-		<!--[if lte IE 8]><script src="src/excanvas.js"></script><![endif]-->
+		<!--[if lte IE 8]><script src="src/excanvas2.js"></script><![endif]-->
 		<script src="src/Chart.js"></script>
 		<script>
 			(function(window, document, undefined) {
@@ -306,25 +307,22 @@
 				
 				// Add button event to update the ring chart data set:
 				document.getElementById("updateBtn").onclick = function(event) {
-					var event = event || window.event, 
-					    target = event.target || event.srcElement, 
-					    isUpdate = (target.value === "Update"), 
+					var target = (event = event || window.event).target || event.srcElement, 
+					    isUpdate = (target.getAttribute("data-next") === "update"), 
 					    dataSet = (isUpdate) ? updateData : chartData, 
-					    nextAction = (isUpdate) ? "Revert" : "Update", 
-					    doc = document, 
-					    sIdx = 0, 
-					    sPct;
+					    slice, subSlice, sPct, sIdx, i, j, 
+					    doc = document;
 					
-					for (var i=0, slice; slice=dataSet[i]; i++) {
+					for (i=sIdx=0; slice=dataSet[i]; i++) {
 						sPct = 0;
-						for (var j=0, subSlice; subSlice=slice[1][j]; j++) {
-							doc.getElementById("pct-" + (sIdx++)).innerHTML = subSlice[1].toFixed(2);
+						for (j=0; subSlice=slice[1][j]; j++) {
+							doc.getElementById("pct-" + (sIdx++)).value = subSlice[1].toFixed(2);
 							sPct += (subSlice[1] || 0);
 						}
-						doc.getElementById("pctMain-" + i).innerHTML = sPct.toFixed(2);
+						doc.getElementById("pctMain-" + i).value = sPct.toFixed(2);
 					}
 					
-					target.value = nextAction;
+					target.setAttribute("data-next", (isUpdate) ? "revert" : "update");
 					ringChart.updateData(dataSet);
 				};
 			})(this, this.document);
