@@ -510,7 +510,7 @@
 		    vml = [], v = 0;
 		
 		// Ensure proper text alignment:
-    textAlign = (/^left|center|right$/.test(textAlign)) ? textAlign : 
+		textAlign = (/^left|center|right$/.test(textAlign)) ? textAlign : 
                 (textAlign === "end") ? ((cStyle.direction == "ltr") ? "right" : "left") : 
                 (textAlign === "start") ? ((cStyle.direction == "rtl") ? "right" : "left") : "left";
 		range = {};
