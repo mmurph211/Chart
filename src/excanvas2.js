@@ -511,8 +511,8 @@
 		
 		// Ensure proper text alignment:
 		textAlign = (/^left|center|right$/.test(textAlign)) ? textAlign : 
-                (textAlign === "end") ? ((cStyle.direction == "ltr") ? "right" : "left") : 
-                (textAlign === "start") ? ((cStyle.direction == "rtl") ? "right" : "left") : "left";
+		            (textAlign === "end") ? ((cStyle.direction == "ltr") ? "right" : "left") : 
+		            (textAlign === "start") ? ((cStyle.direction == "rtl") ? "right" : "left") : "left";
 		range = {};
 		range.left = { "center" : 500, "right" : 1000 }[textAlign] || 0;
 		range.right = { "center" : 500, "right" : 0.05 }[textAlign] || 1000;
