@@ -454,7 +454,7 @@
 			cDSet[numFrames] = newData;
 			
 			for (i=0; (oS=slices[i]) && (nS=newData[i]); i++) {
-				if ((animate = (oS[0] === nS[0] && oS[1] > 0 && nS[1] > 0 && oS[3] === nS[3]))) {
+				if ((animate = (oS[0] === nS[0] && oS[1] >= 0 && nS[1] >= 0 && oS[3] === nS[3]))) {
 					oSLabel = oS[0];
 					oSPct = oS[1];
 					incBy = (oSPct - nS[1]) / numFrames;
@@ -772,7 +772,7 @@
 					}
 					
 					for (k=0; (oSS=oSSubs[k]) && (nSS=nSSubs[k]); k++) {
-						if ((animate = (oSS[0] === nSS[0] && oSS[1] > 0 && nSS[1] > 0))) {
+						if ((animate = (oSS[0] === nSS[0] && oSS[1] >= 0 && nSS[1] >= 0))) {
 							oSLabel = oSS[0];
 							oSSPct = oSS[1];
 							incBy = (oSSPct - nSS[1]) / numFrames;
